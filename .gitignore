@@ -6,6 +6,7 @@ target/
 
 ### Application Properties ###
 !**/src/main/resources/application.properties
+*.properties
 
 ### STS ###
 .apt_generated

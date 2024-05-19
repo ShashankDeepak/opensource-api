@@ -1,5 +1,6 @@
 package com.opensource.projects.modal;
 
+import com.opensource.projects.modal.auth_modal.ApiLogEntryModal;
 import com.opensource.projects.modal.roles.Role;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
@@ -10,10 +11,12 @@ import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.data.mongodb.core.mapping.Field;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
@@ -32,6 +35,7 @@ public class User implements UserDetails {
     @Enumerated(EnumType.STRING)
     Role role;
 
+    List<ApiLogEntryModal> apiLogEntryModal = new ArrayList<>();
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return role.grantedAuthorities();
@@ -64,6 +68,6 @@ public class User implements UserDetails {
 
     @Override
     public boolean isEnabled() {
-        return true;
+        return false;
     }
 }

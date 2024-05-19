@@ -12,21 +12,24 @@ import java.util.stream.Collectors;
 public enum Role {
     MEMBER (
             Set.of(
-                    Permission.MEMBER_CREATE
+                    Permission.MEMBER_AUTH,
+                    Permission.MEMBER_READ
             )
     ),
     ADMIN (
             Set.of(
-                    Permission.MEMBER_CREATE,
-                    Permission.MEMBER_READ,
+                    Permission.ADMIN_AUTH,
                     Permission.ADMIN_CREATE,
-                    Permission.ADMIN_READ
+                    Permission.ADMIN_READ,
+                    Permission.CREATE_ADMIN
                     )
     ),
 
     SUB_ADMIN (
             Set.of(
-                  Permission.ADMIN_CREATE
+                    Permission.ADMIN_AUTH,
+                  Permission.ADMIN_READ,
+                    Permission.ADMIN_CREATE
             )
     );
 
