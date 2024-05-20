@@ -36,6 +36,7 @@ public class User implements UserDetails {
     Role role;
 
     List<ApiLogEntryModal> apiLogEntryModal = new ArrayList<>();
+    boolean isEmailVerified = false;
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return role.grantedAuthorities();
@@ -68,6 +69,6 @@ public class User implements UserDetails {
 
     @Override
     public boolean isEnabled() {
-        return false;
+        return true;
     }
 }

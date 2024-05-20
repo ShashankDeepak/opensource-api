@@ -34,6 +34,8 @@ public class SecurityConfiguration {
                                         .permitAll()
                                         .requestMatchers("/v1/auth/login")
                                         .permitAll()
+                                        .requestMatchers("/v1/auth/verify")
+                                        .permitAll()
                                         .anyRequest()
                                         .authenticated()
                 )

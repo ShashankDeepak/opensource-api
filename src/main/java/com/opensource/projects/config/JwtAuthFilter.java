@@ -1,5 +1,7 @@
 package com.opensource.projects.config;
 
+import com.opensource.projects.error.UserEmailNotVerifiedException;
+import com.opensource.projects.modal.User;
 import com.opensource.projects.service.JwtService;
 import com.opensource.projects.service.user_service.UserServiceImpl;
 import jakarta.servlet.FilterChain;
@@ -33,7 +35,7 @@ public class JwtAuthFilter extends OncePerRequestFilter {
 
     Logger logger = LoggerFactory.getLogger(JwtAuthFilter.class);
     @Override
-    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException, UsernameNotFoundException {
+    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
         final String authHeader = request.getHeader("Authorization");
         if(authHeader == null || !authHeader.startsWith("Bearer")){
             filterChain.doFilter(request,response);
@@ -42,8 +44,11 @@ public class JwtAuthFilter extends OncePerRequestFilter {
         String jwtToken = authHeader.substring(7);
         String username =  jwtService.extractUsername(jwtToken);
         if(username != null && SecurityContextHolder.getContext().getAuthentication() == null){
-            try {
                 UserDetails userDetails = userDetailsService.loadUserByUsername(username);
+                User user = userService.findUserByEmail(username);
+//                if(!user.isEmailVerified()){
+//                    throw new RuntimeException(new UsernameNotFoundException("User email not verified"));
+//                }
                 UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken = new UsernamePasswordAuthenticationToken(
                         userDetails,
                         null,
@@ -51,11 +56,6 @@ public class JwtAuthFilter extends OncePerRequestFilter {
                         );
                 SecurityContextHolder.getContext().setAuthentication(usernamePasswordAuthenticationToken);
                 filterChain.doFilter(request,response);
-            } catch(UsernameNotFoundException e){
-                logger.info("Error in doFilterInternal in Class JwtAuthFilter with error = " + e.getMessage());
-                e.printStackTrace();
-                throw e;
-            }
         }
     }
 
