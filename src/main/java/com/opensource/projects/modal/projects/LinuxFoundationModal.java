@@ -1,4 +1,4 @@
-package com.opensource.projects.modal;
+package com.opensource.projects.modal.projects;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
@@ -14,7 +14,7 @@ import org.springframework.data.mongodb.core.mapping.Field;
 @NoArgsConstructor
 @Builder
 @Document(collection = "lf")
-public class LinuxFoundationModal {
+public class LinuxFoundationModal extends Project{
 
     @Id
     String id;

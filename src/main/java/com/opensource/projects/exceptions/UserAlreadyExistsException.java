@@ -1,4 +1,4 @@
-package com.opensource.projects.error;
+package com.opensource.projects.exceptions;
 
 public class UserAlreadyExistsException extends Exception{
 

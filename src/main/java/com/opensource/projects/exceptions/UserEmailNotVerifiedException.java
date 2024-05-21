@@ -1,4 +1,4 @@
-package com.opensource.projects.error;
+package com.opensource.projects.exceptions;
 
 public class UserEmailNotVerifiedException  extends Exception{
     public UserEmailNotVerifiedException() {

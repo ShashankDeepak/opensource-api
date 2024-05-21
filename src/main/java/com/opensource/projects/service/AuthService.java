@@ -5,6 +5,7 @@ import com.opensource.projects.modal.User;
 import com.opensource.projects.modal.auth_modal.AuthenticationResponseModal;
 import com.opensource.projects.modal.auth_modal.LoginRequestModal;
 import com.opensource.projects.modal.auth_modal.RegisterRequestModal;
+import com.opensource.projects.modal.roles.Role;
 import com.opensource.projects.service.user_service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Async;
@@ -31,11 +32,11 @@ public class AuthService {
     @Autowired
     AuthenticationManager authenticationManager;
 
-    public String register(RegisterRequestModal registerRequestModal) throws UsernameNotFoundException {
+    public String register(RegisterRequestModal registerRequestModal,Role role) throws UsernameNotFoundException {
         User user = User.builder()
                 .email(registerRequestModal.getEmail())
                 .password(passwordEncoder.encode(registerRequestModal.getPassword()))
-                .role(registerRequestModal.getRole())
+                .role(role)
                 .build();
         String jwtToken = jwtService.generateToken(user);
         saveUser(user);

@@ -1,6 +1,7 @@
-package com.opensource.projects.modal.gsod;
+package com.opensource.projects.modal.projects.gsod;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.opensource.projects.modal.projects.Project;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -11,7 +12,7 @@ import org.springframework.data.mongodb.core.mapping.Field;
 @AllArgsConstructor
 @NoArgsConstructor
 @Document(collection = "gsod")
-public class GsodModalNew {
+public class GsodModalNew extends Project {
 
     @Id
     String id;

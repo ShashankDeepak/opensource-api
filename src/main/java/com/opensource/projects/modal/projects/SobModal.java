@@ -1,4 +1,4 @@
-package com.opensource.projects.modal;
+package com.opensource.projects.modal.projects;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
@@ -9,27 +9,11 @@ import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
 
 import java.util.List;
-
-/*
-*   {
-    "name": "Aarush Bhat",
-    "organization": "Utreexo",
-    "description": "Improvements to utreexo.",
-    "mentor": "Calvin Kim",
-    "university": "Vellore Institute of Technology",
-    "country": "India",
-    "project_links": [
-      "https://github.com/mit-dci/utreexo/commits?author=r-ush"
-    ],
-    "year": 2021
-  },
-* */
-
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Document(collection = "sob")
-public class SobModal {
+public class SobModal extends Project{
     @Id
     String id;
     String name;
