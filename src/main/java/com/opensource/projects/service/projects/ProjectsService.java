@@ -6,11 +6,13 @@ import org.springframework.data.domain.Page;
 
 import java.util.List;
 
-public interface ProjectsService {
+public interface ProjectsService<T extends Project> {
 
-    public Project getModalById(String id) throws ProjectNotFoundException;
+    public T getModalById(String id) throws ProjectNotFoundException;
 
-    public List<? extends Project> getModalsByYear(Integer year);
+    public List<T> getModalsByYear(Integer year);
 
-    public Page<? extends Project> getModalsByPage(int pageNumber, int pageSize);
+    public Page<T> getModalsByPage(int pageNumber, int pageSize);
+
+    public void updateProject(T project) throws ProjectNotFoundException;
 }

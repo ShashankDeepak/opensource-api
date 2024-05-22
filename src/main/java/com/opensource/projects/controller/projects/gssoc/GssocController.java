@@ -1,9 +1,7 @@
 package com.opensource.projects.controller.projects.gssoc;
 
 import com.opensource.projects.exceptions.ProjectNotFoundException;
-import com.opensource.projects.modal.Error;
 import com.opensource.projects.modal.projects.GssocModal;
-import com.opensource.projects.modal.projects.Project;
 import com.opensource.projects.service.JsonService;
 import com.opensource.projects.service.projects.GssocServiceImpl;
 import jakarta.servlet.http.HttpServletRequest;
@@ -14,14 +12,13 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Set;
 
 import static com.opensource.projects.modal.Error.INVALID_PARAMETERS;
 import static com.opensource.projects.modal.Error.PROJECT_NOT_FOUND;
 
 @RestController
 @RequestMapping("/gssoc")
-public class GssocMember {
+public class GssocController {
     @Autowired
     JsonService jsonService;
     @Autowired
@@ -61,11 +58,32 @@ public class GssocMember {
                     .contentType(MediaType.APPLICATION_JSON)
                     .body(jsonService.jsonError(INVALID_PARAMETERS,payload));
         }
-        return ResponseEntity
-                .status(200)
-                .contentType(MediaType.APPLICATION_JSON)
-                .body(jsonService.jsonPage(gssocService
-                        .getModalsByPage(Integer.parseInt(map.get("pageNumber")),Integer.parseInt(map.get("pageSize")))));
+        try{
+            int pageNumber = Integer.parseInt(map.get("pageNumber"));
+            int pageSize = Integer.parseInt(map.get("pageSize"));
+            return ResponseEntity
+                    .status(200)
+                    .contentType(MediaType.APPLICATION_JSON)
+                    .body(jsonService.jsonPage(gssocService
+                            .getModalsByPage(pageNumber,pageSize)));
+        } catch (NumberFormatException e){
+            Map<String,String> payload = new HashMap<>();
+            payload.put("expecting","/page?pageNumber=[int]&pageSize=[int]");
+            String received = request.getServletPath() + "?";
+            String[] list = map.keySet().toArray(new String[0]);
+            for(int i = 0; i < list.length; i++){
+                received += list[i] + "=" + map.get(list[i]);
+                if(i != list.length - 1){
+                    received += "&";
+                }
+            }
+            payload.put("received",received);
+            return ResponseEntity.status(400)
+                    .contentType(MediaType.APPLICATION_JSON)
+                    .body(jsonService.jsonError(INVALID_PARAMETERS,payload));
+        }
     }
+
+
 
 }
